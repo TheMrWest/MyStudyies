@@ -173,12 +173,30 @@ int inserir_inicio_llde_desc(Desc *d, int valor) {
     }
 }
 
+int inserir_fim_llde_desc(Desc *d, int valor) {
+    No *novo;
+    novo = (No *)malloc(sizeof(No));
+
+    novo->dado = valor;
+    novo->prox = NULL;
+
+    if(d->ini == NULL) {
+        d->ini = novo;
+        d->fim = novo;
+    } else{
+        d->fim->prox = novo;
+        d->fim = novo;
+    }
+
+    return 1;
+}
+
 void mostrarListaDesc(Desc *d) {
     if (d->ini == NULL) {
         printf("Valiza Desc");
     }
 
-    for(No *p; p!=NULL; p =p->prox) {
+    for(No *p = d->ini; p!=NULL; p =p->prox) {
         printf("%d - ", p->dado);
 
     }
@@ -191,12 +209,12 @@ int main() {
     d.ini = NULL;
     d.fim = NULL;
 
-    inserir_inicio_llde_desc(&d, 10);
-    inserir_inicio_llde_desc(&d, 20);
-    inserir_inicio_llde_desc(&d, 30);
+    inserir_fim_llde_desc(&d, 10);
+    inserir_fim_llde_desc(&d, 20);
+    inserir_fim_llde_desc(&d, 30);
     mostrarListaDesc(&d);
 
-    while (c) {
+    while (0) {
         Panel();
         int valor;
 
