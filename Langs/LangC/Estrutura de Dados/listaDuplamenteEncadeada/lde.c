@@ -6,6 +6,11 @@ typedef struct no {
     struct no *prox, *ant;
 } No;
 
+typedef struct desc{
+    No *ini, *fim;
+
+}Desc;
+
 void mostrar_lista_llde(No **lista){
     if(*lista == NULL){
         printf("lista Vazia!\n");
@@ -109,6 +114,15 @@ int inserir_ordenado(No **lista, int valor){
     return 1;
 }
 
+int remover_inicio_llde(No **lista) {
+    if(*lista == NULL) {
+        return 0;
+    }
+
+
+
+    return 1;
+}
 void Panel() {
     char *textos[] = {
         "[0] - Sair",
@@ -140,9 +154,47 @@ int valueInsert() {
     return v;
 }
 
+
+int inserir_inicio_llde_desc(Desc *d, int valor) {
+    No *novo;
+    novo = (No *)malloc(sizeof(No));
+
+    novo->dado = valor;
+    novo->prox = NULL;
+    novo->ant = NULL;
+
+    if(d->ini == NULL) {
+        d->ini = novo;
+        d->fim = novo;
+    } else {
+        novo->prox = d->ini;
+        d->ini = novo;
+
+    }
+}
+
+void mostrarListaDesc(Desc *d) {
+    if (d->ini == NULL) {
+        printf("Valiza Desc");
+    }
+
+    for(No *p; p!=NULL; p =p->prox) {
+        printf("%d - ", p->dado);
+
+    }
+}
 int main() {
     int c = 1;
     No *A = NULL, *novo;
+    Desc d;
+
+    d.ini = NULL;
+    d.fim = NULL;
+
+    inserir_inicio_llde_desc(&d, 10);
+    inserir_inicio_llde_desc(&d, 20);
+    inserir_inicio_llde_desc(&d, 30);
+    mostrarListaDesc(&d);
 
     while (c) {
         Panel();
@@ -172,8 +224,14 @@ int main() {
             printf("Nooee");
            }
            break;
-        case 7:
 
+        case 4:
+           system("clear");
+           if(remover_inicio_llde(&A)); else {
+            printf("nun deu certo");
+           }
+        case 7:
+    
            system("clear");
            mostrar_lista_llde(&A);
            break;
