@@ -4,7 +4,7 @@
 typedef struct no {
     int dado;
     struct no *prox, *ant;
-}No;
+} No;
 
 void mostrar_lista_llde(No **lista){
     if(*lista == NULL){
@@ -18,9 +18,35 @@ void mostrar_lista_llde(No **lista){
         printf("\n");
 }
 
+int inserir_inicio_llde(No **lista, int valor){
+    No *novo;
+    novo = (No *) malloc(sizeof(No));
+
+    if(novo == NULL) {
+        return 0;
+    }
+    novo->dado = valor;
+    novo->prox = NULL;
+
+    novo->ant = NULL;
+
+    if(*lista == NULL){
+        *lista = novo;
+    }else{
+        novo->prox = *lista;
+        *lista = novo;
+    }
+    return 1;
+}
+
 int inserir_final_llde(No **lista, int valor){
     No *novo;
     novo = (No *) malloc(sizeof(No));
+
+    if(novo == NULL) {
+        return 0;
+    }
+
     novo->dado = valor;
     novo->prox = NULL;
 
@@ -33,6 +59,54 @@ int inserir_final_llde(No **lista, int valor){
         for(p = *lista; p->prox != NULL; p = p->prox);
         p->prox = novo;
     }
+
+    return 1;
+}
+
+int inserir_ordenado(No **lista, int valor){
+    No *novo;
+    novo = (No *) malloc(sizeof(No));
+
+    if(novo == NULL) {
+        return 0;
+    }
+
+    novo->dado = valor;
+
+    novo->prox = NULL;
+    novo->ant = NULL;
+    
+    if(*lista == NULL){
+        *lista = novo;
+    }else{
+        No *p, *q;
+        q = NULL;
+
+        for(p = *lista; p != NULL; p = p->prox) {
+            if(valor < p->dado) {
+                break;
+            }
+            q = p;
+        } 
+        if(q == NULL) {
+
+            novo->prox = *lista;
+            p->ant = novo;
+            *lista = novo;
+            return 1;
+
+        }
+        if(p == NULL) {
+            q->prox = novo;
+            *lista = novo;
+        }
+        novo->prox = p;
+        novo->ant = q;
+        p->ant = novo;
+        q->prox = novo;
+    }
+
+    return 1;
 }
 
 void Panel() {
@@ -80,6 +154,9 @@ int main() {
         switch (valor) {
         case 1:
             system("clear");
+            if(inserir_inicio_llde(&A, valueInsert())); else {
+                printf("Não foi concluido");
+            }
             break;
         
         case 2:
@@ -88,7 +165,15 @@ int main() {
             printf("O procedimento não foi concluído!");
            }
            break;
+
+        case 3:
+           system("clear");
+           if(inserir_ordenado(&A, valueInsert())); else {
+            printf("Nooee");
+           }
+           break;
         case 7:
+
            system("clear");
            mostrar_lista_llde(&A);
            break;
